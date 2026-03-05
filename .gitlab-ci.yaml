@@ -1,0 +1,13 @@
+stages:
+  - test
+
+cucumber_test:
+  stage: test
+  image: maven:3.9.7-amazoncorretto-17
+  script:
+    - echo "Pipeline source is: $CI_PIPELINE_SOURCE"
+    - mvn clean test
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
+    - if: '$CI_PIPELINE_SOURCE == "web"'
+    - when: never
